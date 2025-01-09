@@ -15,7 +15,11 @@ The application is split into three main layers (packages) to separate concerns 
 Within the `lib/common/cubit` directory, you will also find **generic base classes** and **related widgets** for managing network requests and pagination. This setup makes it easier to reuse the logic in the future.
 
 ---
+## Code Quality & Style
 
+All code in this project has been formatted according to the latest Dart style guidelines. It also passes lint checks with the very good analyzer, ensuring there are no analyzer errors and maintaining a high standard of code quality.
+
+---
 ## Libraries & Technologies
 
 - **[dio](https://pub.dev/packages/dio)** — For making HTTP requests.
