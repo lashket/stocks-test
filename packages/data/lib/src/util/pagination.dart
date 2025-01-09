@@ -80,7 +80,10 @@ class PaginatedRequestData {
   Map<String, dynamic> toJson() => _$PaginatedRequestDataToJson(this);
 }
 
+/// Pagination information with limit, offset, count, and total fields
 extension PaginatedResponseDTOExtension<T> on PaginatedResponseDTO<T> {
+
+  /// Converts the DTO to a domain object
   PaginatedResponse<U> toDomain<U>({
     required U Function(T) mapData,
   }) {
@@ -91,9 +94,10 @@ extension PaginatedResponseDTOExtension<T> on PaginatedResponseDTO<T> {
   }
 }
 
-// data/dto/pagination_dto.dart
-
+/// Pagination information with limit, offset, count, and total fields
 extension PaginationDTOExtension on PaginationDTO {
+
+  /// Converts the DTO to a domain object
   Pagination toDomain() {
     return Pagination(
       limit: limit,

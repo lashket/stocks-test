@@ -7,6 +7,10 @@ abstract interface class IStockDataService {
   Future<ApiResponse<PaginatedResponseDTO<StockDataDTO>>> getStocks(
     PaginatedRequestData requestData,
   );
+
+  /// Get stock details
+  Future<dynamic> getStockDetails(String symbol);
+
 }
 
 /// Implementation of [IStockDataService] that uses Dio to make API calls.
@@ -32,5 +36,10 @@ class StockRemoteService implements IStockDataService {
         );
       },
     );
+  }
+
+  @override
+  Future<dynamic> getStockDetails(String symbol) {
+    throw UnimplementedError();
   }
 }

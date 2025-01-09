@@ -3,14 +3,13 @@ import 'package:dio/dio.dart';
 
 /// Extension for Dio to handle API responses
 extension DioExtensions on Dio {
-
   /// Fetches data from the API and returns an [ApiResponse].
   Future<ApiResponse<T>> getData<T, K>(
-      String path, {
-        K Function(Map<String, dynamic>)? mapper,
-        dynamic data,
-        Map<String, dynamic>? queryParameters,
-      }) async {
+    String path, {
+    K Function(Map<String, dynamic>)? mapper,
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
       final response = await get<dynamic>(
         path,

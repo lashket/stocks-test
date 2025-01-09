@@ -102,8 +102,9 @@ class ApiResponse<T> {
   static ApiResponse<T> buildUnsuccessfulResponse<T>(
     Response<dynamic> response,
   ) {
-    final errorResult =
-        ErrorResult.fromJson(response.data['error'] as Map<String, dynamic>);
+    final errorResult = ErrorResult.fromJson(
+      (response.data as Map<String, dynamic>)['error'] as Map<String, dynamic>,
+    );
 
     return ApiResponse<T>.apiError(
       errorResult: errorResult,
@@ -119,7 +120,8 @@ class ApiResponse<T> {
 
     if (exception.response != null) {
       final errorResult = ErrorResult.fromJson(
-        exception.response!.data['error'] as Map<String, dynamic>,
+        (exception.response?.data as Map<String, dynamic>)['error']
+            as Map<String, dynamic>,
       );
       return ApiResponse.apiError(
         errorResult: errorResult,
@@ -152,7 +154,7 @@ class ApiResponse<T> {
         case _Status.networkError:
           return onNetworkError?.call();
       }
-    } catch (e, t) {
+    } catch (e) {
       return onApiError?.call(null, null);
     }
   }
