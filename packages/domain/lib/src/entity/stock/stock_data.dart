@@ -8,6 +8,7 @@ class StockEntity {
     required this.close,
     required this.name,
     required this.symbol,
+    required this.date,
   });
 
   /// Stock open price
@@ -27,4 +28,7 @@ class StockEntity {
 
   /// Stock symbol
   final String symbol;
+
+  /// Date of the stock
+  final DateTime date;
 }

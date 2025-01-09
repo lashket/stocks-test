@@ -81,7 +81,7 @@ class _PaginatedListViewWidgetState<T>
             loading: () =>
                 widget.loadingWidget?.call(context) ??
                 const Center(child: CircularProgressIndicator()),
-            loaded: (items, hasMore) {
+            loaded: (items, hasMore, _) {
               if (items.isEmpty) {
                 return widget.emptyBuilder?.call(context) ??
                     const Center(child: Text('No items found.'));

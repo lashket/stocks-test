@@ -44,6 +44,7 @@ extension StockDataDTOExtension on StockDataDTO {
       close: close,
       name: name,
       symbol: symbol,
+      date: DateTime.parse(date),
     );
   }
 }

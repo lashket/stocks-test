@@ -9,14 +9,12 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           initial: true,
-          page: StockListRoute.page,
+          page: StocksListRoute.page,
           path: '/',
-          children: [
-            AutoRoute(
-              path: 'symbol/:id',
-              page: SymbolDetailRoute.page,
-            ),
-          ],
+        ),
+        AutoRoute(
+          path: '/symbol/:id',
+          page: SymbolDetailRoute.page,
         ),
       ];
 }

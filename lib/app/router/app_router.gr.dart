@@ -16,20 +16,20 @@ import 'package:infinit_stocks_test_task/feature/stocks_list/widget/stock_list_s
     as _i1;
 
 /// generated route for
-/// [_i1.StockListScreen]
-class StockListRoute extends _i3.PageRouteInfo<void> {
-  const StockListRoute({List<_i3.PageRouteInfo>? children})
+/// [_i1.StocksListScreen]
+class StocksListRoute extends _i3.PageRouteInfo<void> {
+  const StocksListRoute({List<_i3.PageRouteInfo>? children})
       : super(
-          StockListRoute.name,
+          StocksListRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'StockListRoute';
+  static const String name = 'StocksListRoute';
 
   static _i3.PageInfo page = _i3.PageInfo(
     name,
     builder: (data) {
-      return const _i1.StockListScreen();
+      return const _i1.StocksListScreen();
     },
   );
 }

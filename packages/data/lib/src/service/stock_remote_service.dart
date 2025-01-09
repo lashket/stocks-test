@@ -6,10 +6,11 @@ abstract interface class IStockDataService {
   /// Get stocks
   Future<ApiResponse<PaginatedResponseDTO<StockDataDTO>>> getStocks(
     PaginatedRequestData requestData,
+    DateRangeRequestData dateRange,
   );
 
   /// Get stock details
-  Future<dynamic> getStockDetails(String symbol);
+  Future<ApiResponse<StockTickerDto>> getStockTickerDetails(String symbol);
 }
 
 /// Implementation of [IStockDataService] that uses Dio to make API calls.
@@ -24,10 +25,14 @@ class StockRemoteService implements IStockDataService {
   @override
   Future<ApiResponse<PaginatedResponseDTO<StockDataDTO>>> getStocks(
     PaginatedRequestData requestData,
+    DateRangeRequestData dateRange,
   ) {
     return _dio.getData(
-      '/api/stocks',
-      queryParameters: requestData.toJson(),
+      '/eod/latest',
+      queryParameters: {
+        ...requestData.toJson(),
+        ...dateRange.toJson(),
+      },
       mapper: (data) {
         return PaginatedResponseDTO<StockDataDTO>.fromJson(
           data,
@@ -38,7 +43,10 @@ class StockRemoteService implements IStockDataService {
   }
 
   @override
-  Future<dynamic> getStockDetails(String symbol) {
-    throw UnimplementedError();
+  Future<ApiResponse<StockTickerDto>> getStockTickerDetails(String symbol) {
+    return _dio.getData(
+      '/tickers/$symbol',
+      mapper: StockTickerDto.fromJson,
+    );
   }
 }

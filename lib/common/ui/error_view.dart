@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class StocksErrorView extends StatelessWidget {
   const StocksErrorView({
-    required this.onRetry,
     required this.error,
+    this.onRetry,
     super.key,
   });
 
-  final VoidCallback onRetry;
+  final VoidCallback? onRetry;
   final DomainError error;
 
   @override
@@ -22,10 +22,15 @@ class StocksErrorView extends StatelessWidget {
             style: const TextStyle(color: Colors.red),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: onRetry,
-            child: const Text('Retry'),
+          Visibility(
+            visible: onRetry != null,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: ElevatedButton(
+                onPressed: onRetry,
+                child: const Text('Retry'),
+              ),
+            ),
           ),
         ],
       ),

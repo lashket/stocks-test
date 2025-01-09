@@ -20,7 +20,8 @@ mixin _$PaginatedState<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<T> items, bool hasMore) loaded,
+    required TResult Function(List<T> items, bool hasMore, int totalItems)
+        loaded,
     required TResult Function(DomainError error) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +29,7 @@ mixin _$PaginatedState<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<T> items, bool hasMore)? loaded,
+    TResult? Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult? Function(DomainError error)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +37,7 @@ mixin _$PaginatedState<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<T> items, bool hasMore)? loaded,
+    TResult Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult Function(DomainError error)? error,
     required TResult orElse(),
   }) =>
@@ -133,7 +134,8 @@ class _$PaginatedInitialImpl<T> implements PaginatedInitial<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<T> items, bool hasMore) loaded,
+    required TResult Function(List<T> items, bool hasMore, int totalItems)
+        loaded,
     required TResult Function(DomainError error) error,
   }) {
     return initial();
@@ -144,7 +146,7 @@ class _$PaginatedInitialImpl<T> implements PaginatedInitial<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<T> items, bool hasMore)? loaded,
+    TResult? Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult? Function(DomainError error)? error,
   }) {
     return initial?.call();
@@ -155,7 +157,7 @@ class _$PaginatedInitialImpl<T> implements PaginatedInitial<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<T> items, bool hasMore)? loaded,
+    TResult Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult Function(DomainError error)? error,
     required TResult orElse(),
   }) {
@@ -251,7 +253,8 @@ class _$PaginatedLoadingImpl<T> implements PaginatedLoading<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<T> items, bool hasMore) loaded,
+    required TResult Function(List<T> items, bool hasMore, int totalItems)
+        loaded,
     required TResult Function(DomainError error) error,
   }) {
     return loading();
@@ -262,7 +265,7 @@ class _$PaginatedLoadingImpl<T> implements PaginatedLoading<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<T> items, bool hasMore)? loaded,
+    TResult? Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult? Function(DomainError error)? error,
   }) {
     return loading?.call();
@@ -273,7 +276,7 @@ class _$PaginatedLoadingImpl<T> implements PaginatedLoading<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<T> items, bool hasMore)? loaded,
+    TResult Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult Function(DomainError error)? error,
     required TResult orElse(),
   }) {
@@ -331,7 +334,7 @@ abstract class _$$PaginatedLoadedImplCopyWith<T, $Res> {
           $Res Function(_$PaginatedLoadedImpl<T>) then) =
       __$$PaginatedLoadedImplCopyWithImpl<T, $Res>;
   @useResult
-  $Res call({List<T> items, bool hasMore});
+  $Res call({List<T> items, bool hasMore, int totalItems});
 }
 
 /// @nodoc
@@ -349,6 +352,7 @@ class __$$PaginatedLoadedImplCopyWithImpl<T, $Res>
   $Res call({
     Object? items = null,
     Object? hasMore = null,
+    Object? totalItems = null,
   }) {
     return _then(_$PaginatedLoadedImpl<T>(
       items: null == items
@@ -359,6 +363,10 @@ class __$$PaginatedLoadedImplCopyWithImpl<T, $Res>
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      totalItems: null == totalItems
+          ? _value.totalItems
+          : totalItems // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -367,7 +375,9 @@ class __$$PaginatedLoadedImplCopyWithImpl<T, $Res>
 
 class _$PaginatedLoadedImpl<T> implements PaginatedLoaded<T> {
   const _$PaginatedLoadedImpl(
-      {required final List<T> items, required this.hasMore})
+      {required final List<T> items,
+      required this.hasMore,
+      required this.totalItems})
       : _items = items;
 
   final List<T> _items;
@@ -380,10 +390,12 @@ class _$PaginatedLoadedImpl<T> implements PaginatedLoaded<T> {
 
   @override
   final bool hasMore;
+  @override
+  final int totalItems;
 
   @override
   String toString() {
-    return 'PaginatedState<$T>.loaded(items: $items, hasMore: $hasMore)';
+    return 'PaginatedState<$T>.loaded(items: $items, hasMore: $hasMore, totalItems: $totalItems)';
   }
 
   @override
@@ -392,12 +404,14 @@ class _$PaginatedLoadedImpl<T> implements PaginatedLoaded<T> {
         (other.runtimeType == runtimeType &&
             other is _$PaginatedLoadedImpl<T> &&
             const DeepCollectionEquality().equals(other._items, _items) &&
-            (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
+            (identical(other.totalItems, totalItems) ||
+                other.totalItems == totalItems));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_items), hasMore);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_items), hasMore, totalItems);
 
   /// Create a copy of PaginatedState
   /// with the given fields replaced by the non-null parameter values.
@@ -413,10 +427,11 @@ class _$PaginatedLoadedImpl<T> implements PaginatedLoaded<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<T> items, bool hasMore) loaded,
+    required TResult Function(List<T> items, bool hasMore, int totalItems)
+        loaded,
     required TResult Function(DomainError error) error,
   }) {
-    return loaded(items, hasMore);
+    return loaded(items, hasMore, totalItems);
   }
 
   @override
@@ -424,10 +439,10 @@ class _$PaginatedLoadedImpl<T> implements PaginatedLoaded<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<T> items, bool hasMore)? loaded,
+    TResult? Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult? Function(DomainError error)? error,
   }) {
-    return loaded?.call(items, hasMore);
+    return loaded?.call(items, hasMore, totalItems);
   }
 
   @override
@@ -435,12 +450,12 @@ class _$PaginatedLoadedImpl<T> implements PaginatedLoaded<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<T> items, bool hasMore)? loaded,
+    TResult Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult Function(DomainError error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(items, hasMore);
+      return loaded(items, hasMore, totalItems);
     }
     return orElse();
   }
@@ -486,10 +501,12 @@ class _$PaginatedLoadedImpl<T> implements PaginatedLoaded<T> {
 abstract class PaginatedLoaded<T> implements PaginatedState<T> {
   const factory PaginatedLoaded(
       {required final List<T> items,
-      required final bool hasMore}) = _$PaginatedLoadedImpl<T>;
+      required final bool hasMore,
+      required final int totalItems}) = _$PaginatedLoadedImpl<T>;
 
   List<T> get items;
   bool get hasMore;
+  int get totalItems;
 
   /// Create a copy of PaginatedState
   /// with the given fields replaced by the non-null parameter values.
@@ -569,7 +586,8 @@ class _$PaginatedErrorImpl<T> implements PaginatedError<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<T> items, bool hasMore) loaded,
+    required TResult Function(List<T> items, bool hasMore, int totalItems)
+        loaded,
     required TResult Function(DomainError error) error,
   }) {
     return error(this.error);
@@ -580,7 +598,7 @@ class _$PaginatedErrorImpl<T> implements PaginatedError<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<T> items, bool hasMore)? loaded,
+    TResult? Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult? Function(DomainError error)? error,
   }) {
     return error?.call(this.error);
@@ -591,7 +609,7 @@ class _$PaginatedErrorImpl<T> implements PaginatedError<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<T> items, bool hasMore)? loaded,
+    TResult Function(List<T> items, bool hasMore, int totalItems)? loaded,
     TResult Function(DomainError error)? error,
     required TResult orElse(),
   }) {

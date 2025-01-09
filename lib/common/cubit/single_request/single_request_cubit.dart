@@ -18,7 +18,9 @@ class SingleRequestState<T> with _$SingleRequestState<T> {
 }
 
 abstract class SingleRequestCubit<T> extends Cubit<SingleRequestState<T>> {
-  SingleRequestCubit() : super(const SingleRequestState.initial());
+  SingleRequestCubit() : super(const SingleRequestState.initial()) {
+    load();
+  }
 
   Future<Result<T>> fetchData();
 

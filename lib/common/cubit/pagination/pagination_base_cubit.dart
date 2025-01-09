@@ -13,28 +13,22 @@ class PaginatedState<T> with _$PaginatedState<T> {
   const factory PaginatedState.loaded({
     required List<T> items,
     required bool hasMore,
+    required int totalItems,
   }) = PaginatedLoaded<T>;
 
   const factory PaginatedState.error(DomainError error) = PaginatedError<T>;
 }
 
-typedef FetchPage<T> = Future<Result<PaginatedResponse<T>>> Function(
-  int page,
-  int pageSize,
-);
-
 abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
-  PaginatedCubit({
-    required this.fetchPage,
-    this.pageSize = 20,
-  }) : super(const PaginatedState.initial());
+  PaginatedCubit({this.pageSize = 20}) : super(const PaginatedState.initial());
 
-  final FetchPage<T> fetchPage;
   final int pageSize;
 
   int _currentPage = 0;
   List<T> _items = [];
   bool _isLoading = false;
+
+  Future<Result<PaginatedResponse<T>>> fetchPage(int page, int pageSize);
 
   Future<void> fetchInitialPage() async {
     _resetState();
@@ -60,7 +54,13 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
         final hasMore = newItems.length == pageSize;
         _currentPage++;
 
-        emit(PaginatedState.loaded(items: _items, hasMore: hasMore));
+        emit(
+          PaginatedState.loaded(
+            items: _items,
+            hasMore: hasMore,
+            totalItems: response.pagination.total,
+          ),
+        );
       },
       onFailure: (error) {
         emit(PaginatedState.error(error));

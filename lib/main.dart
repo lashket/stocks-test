@@ -5,7 +5,7 @@ import 'package:infinit_stocks_test_task/app/app.dart';
 void main() {
   // Setting up dependency injection for the app
   setupDI(
-    baseUrl: const String.fromEnvironment('base_url'),
+    baseUrl: const String.fromEnvironment('api_url'),
     apiKey: const String.fromEnvironment('api_key'),
   );
 

@@ -81,7 +81,7 @@ class ApiResponse<T> {
         );
       } else {
         return ApiResponse.success(
-          body: response.data as T,
+          body: mapper(response.data as Map<String, dynamic>) as T,
           statusCode: response.statusCode!,
         );
       }
@@ -119,14 +119,16 @@ class ApiResponse<T> {
     }
 
     if (exception.response != null) {
-      final errorResult = ErrorResult.fromJson(
-        (exception.response?.data as Map<String, dynamic>)['error']
-            as Map<String, dynamic>,
-      );
-      return ApiResponse.apiError(
-        errorResult: errorResult,
-        statusCode: exception.response!.statusCode,
-      );
+      try {
+        final errorResult = ErrorResult.fromJson(
+          (exception.response?.data as Map<String, dynamic>)['error']
+              as Map<String, dynamic>,
+        );
+        return ApiResponse.apiError(
+          errorResult: errorResult,
+          statusCode: exception.response!.statusCode,
+        );
+      } catch (_) {}
     }
     return ApiResponse.apiError(
       errorResult: ErrorResult(

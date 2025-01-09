@@ -6,8 +6,10 @@ abstract class IStocksRepository {
   Future<Result<PaginatedResponse<StockEntity>>> fetchStocks({
     required int page,
     required int limit,
+    required DateTime endDate,
+    required int daysDifference,
   });
 
-  /// Fetch [dynamic] dashboard data
-  Future<Result<dynamic>> fetchDashboardData();
+  /// Fetch [StockTickerDataEntity] data
+  Future<Result<StockTickerDataEntity>> fetchSymbolTicker(String symbol);
 }
