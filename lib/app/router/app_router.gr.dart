@@ -38,14 +38,14 @@ class StockListRoute extends _i3.PageRouteInfo<void> {
 /// [_i2.SymbolDetailScreen]
 class SymbolDetailRoute extends _i3.PageRouteInfo<SymbolDetailRouteArgs> {
   SymbolDetailRoute({
-    _i4.Key? key,
     required String symbolId,
+    _i4.Key? key,
     List<_i3.PageRouteInfo>? children,
   }) : super(
           SymbolDetailRoute.name,
           args: SymbolDetailRouteArgs(
-            key: key,
             symbolId: symbolId,
+            key: key,
           ),
           rawPathParams: {'id': symbolId},
           initialChildren: children,
@@ -61,8 +61,8 @@ class SymbolDetailRoute extends _i3.PageRouteInfo<SymbolDetailRouteArgs> {
           orElse: () =>
               SymbolDetailRouteArgs(symbolId: pathParams.getString('id')));
       return _i2.SymbolDetailScreen(
-        key: args.key,
         symbolId: args.symbolId,
+        key: args.key,
       );
     },
   );
@@ -70,16 +70,16 @@ class SymbolDetailRoute extends _i3.PageRouteInfo<SymbolDetailRouteArgs> {
 
 class SymbolDetailRouteArgs {
   const SymbolDetailRouteArgs({
-    this.key,
     required this.symbolId,
+    this.key,
   });
-
-  final _i4.Key? key;
 
   final String symbolId;
 
+  final _i4.Key? key;
+
   @override
   String toString() {
-    return 'SymbolDetailRouteArgs{key: $key, symbolId: $symbolId}';
+    return 'SymbolDetailRouteArgs{symbolId: $symbolId, key: $key}';
   }
 }
