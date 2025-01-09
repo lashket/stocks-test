@@ -10,7 +10,6 @@ abstract interface class IStockDataService {
 
   /// Get stock details
   Future<dynamic> getStockDetails(String symbol);
-
 }
 
 /// Implementation of [IStockDataService] that uses Dio to make API calls.

@@ -7,7 +7,6 @@ part 'stock_data_dto.g.dart';
 /// Data Transfer Object for Stock Data
 @JsonSerializable()
 class StockDataDTO {
-
   StockDataDTO({
     required this.open,
     required this.high,
