@@ -10,6 +10,6 @@ class StockListScreen extends StatelessWidget {
     return const Scaffold(
         body: Center(
       child: Text('Stock List Screen'),
-    ));
+    ),);
   }
 }

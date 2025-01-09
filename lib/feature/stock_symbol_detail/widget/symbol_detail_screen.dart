@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class SymbolDetailScreen extends StatelessWidget {
-  const SymbolDetailScreen(
-      {super.key, @PathParam('id') required this.symbolId});
+  const SymbolDetailScreen({
+    @PathParam('id') required this.symbolId,
+    super.key,
+  });
 
   final String symbolId;
 

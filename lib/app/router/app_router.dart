@@ -15,7 +15,7 @@ class AppRouter extends RootStackRouter {
               AutoRoute(
                 path: 'symbol/:id',
                 page: SymbolDetailRoute.page,
-              )
-            ]),
+              ),
+            ],),
       ];
 }
