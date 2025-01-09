@@ -1,16 +1,44 @@
-# infinit_stocks_test_task
+# MarketStack Flutter App
 
-Test assesstment for Infinit company
+This Flutter application demonstrates working with the [MarketStack API](https://marketstack.com) (quotes and financial data). It showcases convenient mechanisms for pagination and state management. The project is structured into separate packages to isolate responsibilities and maintain a clean architecture.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## Project Structure
 
-A few resources to get you started if this is your first Flutter project:
+The application is split into three main layers (packages) to separate concerns and responsibilities:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. **data**  
+2. **domain**  
+3. **core**  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Within the `lib/common/cubit` directory, you will also find **generic base classes** and **related widgets** for managing network requests and pagination. This setup makes it easier to reuse the logic in the future.
+
+---
+
+## Libraries & Technologies
+
+- **[dio](https://pub.dev/packages/dio)** — For making HTTP requests.
+- **[get_it](https://pub.dev/packages/get_it)** — Service locator for dependency injection.
+- **[auto_route](https://pub.dev/packages/auto_route)** — Declarative routing and navigation.
+- **[freezed](https://pub.dev/packages/freezed)** — Generating immutable classes with `copyWith()` and other utility methods.
+- **[flutter_bloc](https://pub.dev/packages/flutter_bloc)** — State management following the BLoC (Business Logic Component) pattern.
+
+---
+
+## Environment Setup
+
+To run this project, you need to define two variables at build/run time using Dart define:
+
+- `api_url`
+- `api_key`
+
+These values can be obtained by registering at [MarketStack](https://marketstack.com).
+
+### Example Run Command
+
+```bash
+flutter run \
+  --dart-define=api_url=https://api.marketstack.com \
+  --dart-define=api_key=YOUR_API_KEY
+```
