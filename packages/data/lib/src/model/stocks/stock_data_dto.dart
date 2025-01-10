@@ -27,6 +27,7 @@ class StockDataDTO {
   final double low;
   final double close;
   final double volume;
+  @JsonKey(defaultValue: '')
   final String name;
   final String symbol;
   final String exchange;

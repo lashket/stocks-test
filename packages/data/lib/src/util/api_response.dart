@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:data/data.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
+import 'package:flutter/cupertino.dart';
 
 /// Indicates the reason for an API failure.
 enum ApiFailureReason {
@@ -80,10 +81,21 @@ class ApiResponse<T> {
           statusCode: response.statusCode!,
         );
       } else {
-        return ApiResponse.success(
-          body: mapper(response.data as Map<String, dynamic>) as T,
-          statusCode: response.statusCode!,
-        );
+        try {
+          return ApiResponse.success(
+            body: mapper(response.data as Map<String, dynamic>) as T,
+            statusCode: response.statusCode!,
+          );
+        } catch (e, s) {
+          debugPrintStack(stackTrace: s);
+          return ApiResponse.apiError(
+            errorResult: ErrorResult(
+              code: -1,
+              message: 'An error occurred while parsing the response',
+            ),
+            statusCode: -1,
+          );
+        }
       }
     } else {
       return buildUnsuccessfulResponse<T>(response);

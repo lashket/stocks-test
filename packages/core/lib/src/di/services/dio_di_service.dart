@@ -1,4 +1,5 @@
 import 'package:core/src/di/service_locator.dart';
+import 'package:data/data.dart';
 import 'package:dio/dio.dart';
 
 /// Setup Dio dependency injection.
@@ -34,6 +35,7 @@ class _DioFactory {
           responseBody: true,
           requestBody: true,
         ),
+        ApiVersionInterceptor(version: ApiConfig.apiVersion),
       ],
     );
 
@@ -63,6 +65,23 @@ class ApiKeyInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.queryParameters['access_key'] = apiKey;
+    super.onRequest(options, handler);
+  }
+}
+
+/// Interceptor to prepend an API version to the path.
+class ApiVersionInterceptor extends Interceptor {
+  /// Creates a new [ApiVersionInterceptor] with the given [version].
+  ApiVersionInterceptor({required this.version});
+
+  /// Version of the api, eg. 'v2'.
+  final String version;
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    if (options.path.startsWith('/') && !options.path.contains('/$version')) {
+      options.path = '/$version${options.path}';
+    }
     super.onRequest(options, handler);
   }
 }

@@ -7,6 +7,7 @@ abstract interface class IStockDataService {
   Future<ApiResponse<PaginatedResponseDTO<StockDataDTO>>> getStocks(
     PaginatedRequestData requestData,
     DateRangeRequestData dateRange,
+    String symbol,
   );
 
   /// Get stock details
@@ -26,12 +27,14 @@ class StockRemoteService implements IStockDataService {
   Future<ApiResponse<PaginatedResponseDTO<StockDataDTO>>> getStocks(
     PaginatedRequestData requestData,
     DateRangeRequestData dateRange,
+    String symbol,
   ) {
     return _dio.getData(
-      '/eod/latest',
+      '/eod',
       queryParameters: {
         ...requestData.toJson(),
         ...dateRange.toJson(),
+        'symbols': symbol,
       },
       mapper: (data) {
         return PaginatedResponseDTO<StockDataDTO>.fromJson(

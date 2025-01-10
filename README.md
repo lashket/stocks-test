@@ -34,7 +34,7 @@ All code in this project has been formatted according to the latest Dart style g
 
 To run this project, you need to define two variables at build/run time using Dart define:
 
-- `api_url`
+- `api_url` eg. https://api.marketstack.com
 - `api_key`
 
 These values can be obtained by registering at [MarketStack](https://marketstack.com).

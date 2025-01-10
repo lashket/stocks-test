@@ -36,7 +36,9 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
   }
 
   Future<void> fetchNextPage() async {
-    if (_isLoading || state is! PaginatedLoaded<T>) return;
+    if (_isLoading ||
+        state is! PaginatedLoaded<T> ||
+        !(state as PaginatedLoaded<T>).hasMore) return;
     await _fetchNextPage();
   }
 
@@ -49,9 +51,12 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
     result.map(
       onSuccess: (response) {
         final newItems = response.data;
+
+        final paginationData = response.pagination;
+
         _items.addAll(newItems);
 
-        final hasMore = newItems.length == pageSize;
+        final hasMore = _items.length < paginationData.total;
         _currentPage++;
 
         emit(

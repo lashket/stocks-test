@@ -23,9 +23,10 @@ class StocksRepositoryImpl implements IStocksRepository {
         offset: page * limit,
       ),
       DateRangeRequestData(
-        dateFrom: endDate.add(Duration(days: daysDifference)).dateFormatted,
+        dateFrom: endDate.add(Duration(days: -daysDifference)).dateFormatted,
         dateTo: endDate.dateFormatted,
       ),
+      DomainConfig.defaultSymbol,
     );
     return response.toDomain(
       mapSuccess: (data) {
@@ -36,7 +37,9 @@ class StocksRepositoryImpl implements IStocksRepository {
 
   @override
   Future<Result<StockTickerDataEntity>> fetchSymbolTicker(String symbol) {
-    return _stockDataService.getStockTickerDetails('AAPL').then(
+    return _stockDataService
+        .getStockTickerDetails(DomainConfig.defaultSymbol)
+        .then(
           (response) => response.toDomain(
             mapSuccess: (data) => data.toDomain(),
           ),

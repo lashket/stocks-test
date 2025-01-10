@@ -12,7 +12,7 @@ StockDataDTO _$StockDataDTOFromJson(Map<String, dynamic> json) => StockDataDTO(
       low: (json['low'] as num).toDouble(),
       close: (json['close'] as num).toDouble(),
       volume: (json['volume'] as num).toDouble(),
-      name: json['name'] as String,
+      name: json['name'] as String? ?? '',
       symbol: json['symbol'] as String,
       exchange: json['exchange'] as String,
       date: json['date'] as String,
