@@ -4,5 +4,5 @@ class DomainConfig {
   static const int daysForDisplayHistory = 5000;
 
   /// Default symbol to fetch data
-  static const String defaultSymbol = 'GOOG';
+  static const String defaultSymbol = 'AAPL';
 }

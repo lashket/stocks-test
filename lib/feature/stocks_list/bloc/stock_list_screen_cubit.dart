@@ -29,7 +29,6 @@ class StockListScreenCubit extends Cubit<StockListScreenState> {
           ),
         ) {
     _paginatedSubscription = _paginatedCubit.stream.listen(_onPaginatedChanged);
-    _dashboardSubscription = _dashboardCubit.stream.listen(_onDashboardChanged);
   }
 
   final PaginatedCubit<StockEntity> _paginatedCubit;
@@ -37,7 +36,6 @@ class StockListScreenCubit extends Cubit<StockListScreenState> {
 
   late final StreamSubscription<PaginatedState<StockEntity>>
       _paginatedSubscription;
-  late final StreamSubscription<DashboardState> _dashboardSubscription;
 
   void _onPaginatedChanged(PaginatedState<StockEntity> newState) {
     newState.maybeWhen(
@@ -48,19 +46,12 @@ class StockListScreenCubit extends Cubit<StockListScreenState> {
       },
       orElse: () {},
     );
-    emit(state.copyWith(paginatedState: newState));
+    // emit(state.copyWith(paginatedState: newState));
   }
-
-  void _onDashboardChanged(DashboardState newState) {
-    emit(state.copyWith(dashboardState: newState));
-  }
-
-  Future<void> fetchInitialPage() => _paginatedCubit.fetchInitialPage();
 
   @override
   Future<void> close() {
     _paginatedSubscription.cancel();
-    _dashboardSubscription.cancel();
     _paginatedCubit.close();
     _dashboardCubit.close();
     return super.close();

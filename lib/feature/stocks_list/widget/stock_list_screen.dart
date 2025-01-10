@@ -42,8 +42,6 @@ class _StocksListScreenState extends State<StocksListScreen>
     );
 
     _tabController = TabController(length: 2, vsync: this);
-
-    _parentCubit.fetchInitialPage();
   }
 
   @override

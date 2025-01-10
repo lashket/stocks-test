@@ -20,7 +20,7 @@ class PaginatedState<T> with _$PaginatedState<T> {
 }
 
 abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
-  PaginatedCubit({this.pageSize = 20}) : super(const PaginatedState.initial());
+  PaginatedCubit({this.pageSize = 10}) : super(const PaginatedState.initial());
 
   final int pageSize;
 
@@ -44,7 +44,9 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
 
   Future<void> _fetchNextPage() async {
     _isLoading = true;
-    emit(const PaginatedState.loading());
+    if (_currentPage == 0) {
+      emit(const PaginatedState.loading());
+    }
 
     final result = await fetchPage(_currentPage, pageSize);
 
@@ -54,7 +56,8 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
 
         final paginationData = response.pagination;
 
-        _items.addAll(newItems);
+        final updatedList = [..._items, ...newItems]; // brand-new list object
+        _items = updatedList;
 
         final hasMore = _items.length < paginationData.total;
         _currentPage++;

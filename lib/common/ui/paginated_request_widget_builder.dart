@@ -73,11 +73,12 @@ class _PaginatedListViewWidgetState<T>
     return BlocProvider<PaginatedCubit<T>>.value(
       value: widget.cubit,
       child: BlocBuilder<PaginatedCubit<T>, PaginatedState<T>>(
+        bloc: widget.cubit,
         builder: (context, state) {
           return state.when(
             initial: () =>
                 widget.initialBuilder?.call(context) ??
-                const Center(child: Text('Tap to load items...')),
+                const Center(child: CircularProgressIndicator()),
             loading: () =>
                 widget.loadingWidget?.call(context) ??
                 const Center(child: CircularProgressIndicator()),
