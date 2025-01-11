@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:infinit_stocks_test_task/common/common.dart';
 
 part 'pagination_base_cubit.freezed.dart';
 
@@ -20,9 +21,12 @@ class PaginatedState<T> with _$PaginatedState<T> {
 }
 
 abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
-  PaginatedCubit({this.pageSize = 10}) : super(const PaginatedState.initial());
+  PaginatedCubit({
+    this.pageSize = 10,
+  }) : super(const PaginatedState.initial());
 
   final int pageSize;
+  FooterCubit? _footerCubit;
 
   int _currentPage = 0;
   List<T> _items = [];
@@ -33,6 +37,16 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
   Future<void> fetchInitialPage() async {
     _resetState();
     await _fetchNextPage();
+  }
+
+  // ignore: avoid_setters_without_getters
+  set footerCubit(FooterCubit footerCubit) {
+    _footerCubit = footerCubit;
+  }
+
+  void scrolledToBottom() {
+    if (_footerCubit?.state is FooterError) return;
+    fetchNextPage();
   }
 
   Future<void> fetchNextPage() async {
@@ -46,6 +60,8 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
     _isLoading = true;
     if (_currentPage == 0) {
       emit(const PaginatedState.loading());
+    } else {
+      _footerCubit?.showLoading();
     }
 
     final result = await fetchPage(_currentPage, pageSize);
@@ -61,7 +77,7 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
 
         final hasMore = _items.length < paginationData.total;
         _currentPage++;
-
+        _footerCubit?.reset();
         emit(
           PaginatedState.loaded(
             items: _items,
@@ -71,7 +87,11 @@ abstract class PaginatedCubit<T> extends Cubit<PaginatedState<T>> {
         );
       },
       onFailure: (error) {
-        emit(PaginatedState.error(error));
+        if (_currentPage == 0) {
+          emit(PaginatedState.error(error));
+        } else {
+          _footerCubit?.showError(error);
+        }
       },
     );
 

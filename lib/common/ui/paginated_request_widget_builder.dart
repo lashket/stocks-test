@@ -40,10 +40,13 @@ class PaginatedListViewWidget<T> extends StatefulWidget {
 class _PaginatedListViewWidgetState<T>
     extends State<PaginatedListViewWidget<T>> {
   final _scrollController = ScrollController();
+  late FooterCubit _footerCubit;
 
   @override
   void initState() {
     super.initState();
+    _footerCubit = FooterCubit();
+    widget.cubit.footerCubit = _footerCubit;
     _scrollController.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.cubit.fetchInitialPage();
@@ -64,7 +67,7 @@ class _PaginatedListViewWidgetState<T>
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (currentScroll >= maxScroll * _scrollThreshold) {
-      widget.cubit.fetchNextPage();
+      widget.cubit.scrolledToBottom();
     }
   }
 
@@ -93,11 +96,9 @@ class _PaginatedListViewWidgetState<T>
                 itemCount: items.length + (hasMore ? 1 : 0),
                 itemBuilder: (context, index) {
                   if (index == items.length && hasMore) {
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        child: CircularProgressIndicator(),
-                      ),
+                    return PaginatedFooterWidget(
+                      footerCubit: _footerCubit,
+                      onRetry: widget.cubit.fetchNextPage,
                     );
                   }
                   final item = items[index];
