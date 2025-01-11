@@ -1,0 +1,24 @@
+{
+  "list": "List",
+  "dashboard": "Dashboard",
+  "symbolHistory": "{symbol} symbol history",
+  "@symbolHistory": {
+    "description": "Shows the default symbol history",
+    "placeholders": {
+      "symbol": {}
+    }
+  },
+  "totalItemsCountMessage": "Total items count: {totalItemsCount}",
+  "@totalItemsCountMessage": {
+    "description": "Displays a message with the total items count.",
+    "placeholders": {
+      "totalItemsCount": {}
+    }
+  },
+  "networkError": "Network error",
+  "notFound": "Not found",
+  "unauthorized": "Unauthorized",
+  "unexpectedError": "Unexpected error",
+  "unknownError": "Unknown error",
+  "retry": "Retry"
+}

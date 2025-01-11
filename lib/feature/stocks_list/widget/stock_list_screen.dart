@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinit_stocks_test_task/app/router/router.dart';
 import 'package:infinit_stocks_test_task/common/common.dart';
-import 'package:infinit_stocks_test_task/common/util/datetime_x.dart';
+import 'package:infinit_stocks_test_task/common/util/util.dart';
 import 'package:infinit_stocks_test_task/feature/stocks_list/bloc/bloc.dart';
 
 part 'tabs/stocks_list_tab.dart';
+
 part 'tabs/dashboard_tab.dart';
 
 @RoutePage()
@@ -61,12 +62,14 @@ class _StocksListScreenState extends State<StocksListScreen>
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('${DomainConfig.defaultSymbol} symbol history'),
+          title: Text(
+            context.localization.symbolHistory(DomainConfig.defaultSymbol),
+          ),
           bottom: TabBar(
             controller: _tabController,
-            tabs: const [
-              Tab(text: 'List'),
-              Tab(text: 'Dashboard'),
+            tabs: [
+              Tab(text: context.localization.list),
+              Tab(text: context.localization.dashboard),
             ],
           ),
         ),

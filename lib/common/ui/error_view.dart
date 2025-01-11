@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:infinit_stocks_test_task/common/util/util.dart';
 
 class StocksErrorView extends StatelessWidget {
   const StocksErrorView({
@@ -28,7 +29,7 @@ class StocksErrorView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 16),
               child: ElevatedButton(
                 onPressed: onRetry,
-                child: const Text('Retry'),
+                child: Text(context.localization.retry),
               ),
             ),
           ),
@@ -42,17 +43,17 @@ extension DomainErrorX on DomainError {
   String message(BuildContext context) {
     // TODO(Andrei): Implement localization for error messages.
     if (this is NetworkError) {
-      return 'Network error';
+      return context.localization.networkError;
     }
     if (this is NotFoundError) {
-      return 'Not found';
+      return context.localization.notFound;
     }
     if (this is UnauthorizedError) {
-      return 'Unauthorized';
+      return context.localization.unauthorized;
     }
     if (this is UnexpectedError) {
-      return 'Unexpected error';
+      return context.localization.unexpectedError;
     }
-    return 'Unknown error';
+    return context.localization.unknownError;
   }
 }
