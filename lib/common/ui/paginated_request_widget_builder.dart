@@ -37,8 +37,8 @@ class PaginatedListViewWidget<T> extends StatefulWidget {
       _PaginatedListViewWidgetState<T>();
 }
 
-class _PaginatedListViewWidgetState<T>
-    extends State<PaginatedListViewWidget<T>> {
+class _PaginatedListViewWidgetState<T> extends State<PaginatedListViewWidget<T>>
+    with AutomaticKeepAliveClientMixin {
   final _scrollController = ScrollController();
   late FooterCubit _footerCubit;
 
@@ -52,6 +52,9 @@ class _PaginatedListViewWidgetState<T>
       widget.cubit.fetchInitialPage();
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void dispose() {
@@ -73,6 +76,7 @@ class _PaginatedListViewWidgetState<T>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocProvider<PaginatedCubit<T>>.value(
       value: widget.cubit,
       child: BlocBuilder<PaginatedCubit<T>, PaginatedState<T>>(
@@ -93,6 +97,7 @@ class _PaginatedListViewWidgetState<T>
 
               return ListView.builder(
                 controller: _scrollController,
+                key: const PageStorageKey('paginated_list_view'),
                 itemCount: items.length + (hasMore ? 1 : 0),
                 itemBuilder: (context, index) {
                   if (index == items.length && hasMore) {
